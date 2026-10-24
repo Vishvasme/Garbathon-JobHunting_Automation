@@ -1,10 +1,14 @@
 import json
 import os
+from flask import Flask, render_template, jsonify
 from google import genai
 from google.genai import types
 
-# Initialize Gemini Client (reads GEMINI_API_KEY from environment)
-client = genai.Client()
+app = Flask(__name__)
+
+# Fallback to hardcoded key if environment variable is missing in PowerShell
+api_key = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6I8YUD5FTr_NxvZXSPM2l9ludpNo3CVRuonllUAf4ASIw")
+client = genai.Client(api_key=api_key)
 
 SYSTEM_PROMPT = """
 You are an AI Email Classifier and Security Engine for job seekers.
@@ -19,25 +23,18 @@ Analyze the input array of emails and evaluate each email:
 4. Interview Prep:
    - If status is "Interview", provide 2 concise interview preparation bullet points.
 
-Return strictly a valid JSON array containing objects with these exact keys:
-[
-  {
-    "id": 1,
-    "sender": "",
-    "subject": "",
-    "status": "",
-    "is_scam": false,
-    "scam_reasons": [],
-    "needs_followup": false,
-    "interview_prep_notes": ""
-  }
-]
+Return strictly a valid JSON array matching the specified keys.
 """
 
-def process_job_hunt_inbox(json_path):
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/api/analyze')
+def analyze():
+    json_path = "sample_inbox.json"
     if not os.path.exists(json_path):
-        print(f"Error: {json_path} not found.")
-        return
+        return jsonify({"error": "sample_inbox.json not found"}), 404
 
     with open(json_path, "r", encoding="utf-8") as f:
         inbox_data = json.load(f)
@@ -54,9 +51,7 @@ def process_job_hunt_inbox(json_path):
         )
     )
 
-    return json.loads(response.text)
+    return jsonify(json.loads(response.text))
 
 if __name__ == "__main__":
-    print("Processing inbox emails with Gemini API...")
-    processed_results = process_job_hunt_inbox("sample_inbox.json")
-    print(json.dumps(processed_results, indent=2))
+    app.run(debug=True, port=5000)

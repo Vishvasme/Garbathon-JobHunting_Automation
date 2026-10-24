@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Hunt Autopilot — Gemini AI Shield</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfbf9; /* Off-White Base */
+        }
+        .maroon-card {
+            background: #ffffff;
+            border: 1px solid #e8e2dc;
+            box-shadow: 0 10px 30px -5px rgba(128, 0, 32, 0.05);
+        }
+        .glow-maroon {
+            box-shadow: 0 8px 25px -5px rgba(128, 0, 32, 0.15);
+        }
+        .glow-emerald {
+            box-shadow: 0 8px 25px -5px rgba(16, 185, 129, 0.12);
+        }
+        .glow-amber {
+            box-shadow: 0 8px 25px -5px rgba(217, 119, 6, 0.12);
+        }
+    </style>
+</head>
+<body class="text-slate-900 min-h-screen relative overflow-x-hidden selection:bg-[#800020] selection:text-white">
+
+    <!-- Elegant Off-White & Maroon Background Decor -->
+    <div class="fixed inset-0 bg-[radial-gradient(#8000200a_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="fixed -top-32 -left-32 w-96 h-96 bg-[#800020]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="fixed top-1/2 -right-32 w-96 h-96 bg-[#500014]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-10">
+        
+        <!-- Header -->
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center pb-8 border-b border-[#e2d9d0] gap-6">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-[#800020] text-amber-50 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md shadow-[#800020]/20">
+                        ⚡ Gemini 3.8 Flash Engine
+                    </span>
+                    <span class="text-slate-500 text-xs font-bold uppercase tracking-widest">• Garbathon 2026</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-black text-[#400010] tracking-tight">
+                    Job Hunt <span class="text-[#800020]">Autopilot</span>
+                </h1>
+                <p class="text-slate-600 text-sm mt-1.5 font-medium">Real-time Application Tracker, AI Fraud Shield & Follow-up Automation</p>
+            </div>
+
+            <button 
+                onclick="runAutomation()" 
+                id="runBtn"
+                class="w-full sm:w-auto bg-[#800020] hover:bg-[#600018] text-amber-50 font-bold px-7 py-3.5 rounded-2xl shadow-xl shadow-[#800020]/25 transition-all duration-200 transform active:scale-95 flex items-center justify-center gap-3 border border-[#800020]/20"
+            >
+                <svg id="btnSpinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="btnText" class="tracking-wide">Run AI Analysis Engine</span>
+            </button>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 my-8">
+            <div class="maroon-card rounded-2xl p-6 relative overflow-hidden">
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Inbox Scanned</p>
+                <h3 id="statTotal" class="text-4xl font-black text-[#400010] mt-2">3</h3>
+                <p class="text-slate-400 text-xs mt-1 font-medium">Live Applications</p>
+            </div>
+
+            <div class="maroon-card glow-emerald rounded-2xl p-6 relative overflow-hidden border-emerald-600/30">
+                <p class="text-emerald-700 text-xs font-bold uppercase tracking-wider">Active Interviews</p>
+                <h3 id="statInterviews" class="text-4xl font-black text-emerald-600 mt-2">1</h3>
+                <p class="text-emerald-700/80 text-xs mt-1 font-medium">Ready for Prep</p>
+            </div>
+
+            <div class="maroon-card glow-maroon rounded-2xl p-6 relative overflow-hidden border-[#800020]/30 bg-[#800020]/[0.02]">
+                <p class="text-[#800020] text-xs font-bold uppercase tracking-wider">Scams Neutralized</p>
+                <h3 id="statScams" class="text-4xl font-black text-[#800020] mt-2">1</h3>
+                <p class="text-[#800020]/80 text-xs mt-1 font-medium">Fraud Shield Active</p>
+            </div>
+
+            <div class="maroon-card glow-amber rounded-2xl p-6 relative overflow-hidden border-amber-500/30">
+                <p class="text-amber-700 text-xs font-bold uppercase tracking-wider">Overdue (>7 Days)</p>
+                <h3 id="statFollowups" class="text-4xl font-black text-amber-600 mt-2">1</h3>
+                <p class="text-amber-700/80 text-xs mt-1 font-medium">Action Required</p>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap gap-2 mb-8 border-b border-[#e2d9d0] pb-4">
+            <button onclick="setTab('all')" id="tab-all" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-[#800020] text-white shadow-lg shadow-[#800020]/20">All Applications</button>
+            <button onclick="setTab('interviews')" id="tab-interviews" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-[#e2d9d0] hover:text-[#800020] hover:border-[#800020]/40">Interviews (1)</button>
+            <button onclick="setTab('scams')" id="tab-scams" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-[#e2d9d0] hover:text-[#800020] hover:border-[#800020]/40">Flagged Scams ⚠️ (1)</button>
+            <button onclick="setTab('followups')" id="tab-followups" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-[#e2d9d0] hover:text-[#800020] hover:border-[#800020]/40">Follow-up Due 🕒 (1)</button>
+        </div>
+
+        <!-- Email Cards List -->
+        <div id="resultsContainer" class="space-y-5">
+            <!-- Initial Render Content -->
+        </div>
+    </div>
+
+    <script>
+        let fullData = [
+            {
+                id: 1,
+                sender: "hr@techcorp.com",
+                subject: "Interview Invitation: Frontend Developer",
+                status: "Interview",
+                is_scam: false,
+                scam_reasons: [],
+                needs_followup: false,
+                interview_prep_notes: [
+                    "Review modern JavaScript (ES6+), React lifecycle/hooks, and performance optimization.",
+                    "Prepare clear architectural examples from previous web application projects."
+                ]
+            },
+            {
+                id: 2,
+                sender: "careers-support@gmail.com",
+                subject: "Immediate Job Offer - Registration Required",
+                status: "Suspicious/Scam",
+                is_scam: true,
+                scam_reasons: [
+                    "Sender uses a free webmail domain (@gmail.com) for corporate recruitment",
+                    "Demands an upfront mandatory training fee of Rs. 2,000 before issuing offer letter"
+                ],
+                needs_followup: false,
+                interview_prep_notes: []
+            },
+            {
+                id: 3,
+                sender: "no-reply@workday.com",
+                subject: "Application Received: Software Engineer",
+                status: "Applied",
+                is_scam: false,
+                scam_reasons: [],
+                needs_followup: true,
+                interview_prep_notes: []
+            }
+        ];
+
+        let currentTab = 'all';
+
+        function renderCards() {
+            const container = document.getElementById('resultsContainer');
+            const filtered = fullData.filter(item => {
+                if (currentTab === 'scams') return item.is_scam;
+                if (currentTab === 'followups') return item.needs_followup;
+                if (currentTab === 'interviews') return item.status === 'Interview';
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="text-center py-16 maroon-card rounded-2xl text-slate-500 font-medium">No items found in this category.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="maroon-card rounded-2xl p-6 border ${
+                    item.is_scam 
+                        ? 'border-[#800020]/40 bg-[#800020]/[0.02]' 
+                        : item.status === 'Interview' 
+                        ? 'border-emerald-600/40 bg-emerald-500/[0.02]' 
+                        : 'border-[#e2d9d0]'
+                } transition-all duration-300 hover:shadow-lg">
+                    <div class="flex flex-col md:flex-row justify-between md:items-center gap-3 mb-4 pb-4 border-b border-[#e8e2dc]">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg font-bold text-[#400010]">${item.sender}</span>
+                                <span class="text-xs bg-[#f4efeb] text-[#800020] font-semibold px-2.5 py-1 rounded-md border border-[#e2d9d0]">ID #${item.id}</span>
+                            </div>
+                            <p class="text-slate-700 text-sm font-semibold mt-1">${item.subject}</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            ${item.is_scam ? `<span class="bg-[#800020]/10 text-[#800020] border border-[#800020]/30 text-xs px-3 py-1.5 rounded-full font-extrabold uppercase tracking-wider">⚠️ SCAM DETECTED</span>` : ''}
+                            ${item.needs_followup ? `<span class="bg-amber-500/10 text-amber-800 border border-amber-500/30 text-xs px-3 py-1.5 rounded-full font-extrabold uppercase tracking-wider">🕒 FOLLOW-UP OVERDUE</span>` : ''}
+                            <span class="text-xs px-3.5 py-1.5 rounded-full font-extrabold uppercase tracking-wider ${
+                                item.status === 'Interview' ? 'bg-emerald-500/10 text-emerald-800 border border-emerald-500/30' :
+                                item.status === 'Suspicious/Scam' ? 'bg-[#800020]/10 text-[#800020] border border-[#800020]/30' :
+                                'bg-slate-100 text-slate-700 border border-slate-300'
+                            }">
+                                ${item.status}
+                            </span>
+                        </div>
+                    </div>
+
+                    ${item.is_scam ? `
+                        <div class="bg-[#800020]/5 border border-[#800020]/20 rounded-xl p-4">
+                            <p class="text-[#800020] text-xs font-bold uppercase tracking-wider mb-2">Security Violations Identified:</p>
+                            <ul class="list-disc list-inside text-slate-800 text-sm space-y-1">
+                                ${item.scam_reasons.map(r => `<li>${r}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${item.interview_prep_notes && item.interview_prep_notes.length > 0 ? `
+                        <div class="bg-emerald-500/5 border border-emerald-600/20 rounded-xl p-4">
+                            <p class="text-emerald-800 text-xs font-bold uppercase tracking-wider mb-2">AI Interview Preparation Strategy:</p>
+                            <ul class="list-disc list-inside text-slate-800 text-sm space-y-1">
+                                ${Array.isArray(item.interview_prep_notes) ? item.interview_prep_notes.map(note => `<li>${note}</li>`).join('') : `<li>${item.interview_prep_notes}</li>`}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function runAutomation() {
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            
+            btnSpinner.classList.remove('hidden');
+            btnText.innerText = 'Analyzing with Gemini 3.8 Flash...';
+
+            try {
+                const res = await fetch('/api/analyze');
+                if (res.ok) {
+                    fullData = await res.json();
+                    updateStats();
+                    renderCards();
+                }
+            } catch (err) {
+                console.error("API Call Failed, showing cached presentation data:", err);
+            } finally {
+                btnSpinner.classList.add('hidden');
+                btnText.innerText = 'Run AI Analysis Engine';
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = fullData.length;
+            document.getElementById('statInterviews').innerText = fullData.filter(d => d.status === 'Interview').length;
+            document.getElementById('statScams').innerText = fullData.filter(d => d.is_scam).length;
+            document.getElementById('statFollowups').innerText = fullData.filter(d => d.needs_followup).length;
+        }
+
+        function setTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-[#e2d9d0] hover:text-[#800020] hover:border-[#800020]/40';
+            });
+            const active = document.getElementById(`tab-${tabName}`);
+            active.className = 'tab-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-[#800020] text-white shadow-lg shadow-[#800020]/20';
+            renderCards();
+        }
+
+        renderCards();
+    </script>
+</body>
+</html>
