@@ -6,9 +6,8 @@ from google.genai import types
 
 app = Flask(__name__)
 
-# Fallback to hardcoded key if environment variable is missing in PowerShell
-api_key = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6I8YUD5FTr_NxvZXSPM2l9ludpNo3CVRuonllUAf4ASIw")
-client = genai.Client(api_key=api_key)
+# Reads key strictly from environment variable (never hardcoded)
+client = genai.Client()
 
 SYSTEM_PROMPT = """
 You are an AI Email Classifier and Security Engine for job seekers.
