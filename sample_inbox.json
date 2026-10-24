@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "sender": "hr@techcorp.com",
+    "subject": "Interview Invitation: Frontend Developer",
+    "body": "Hi Vishvas, we liked your profile. Let us schedule an interview for tomorrow at 3 PM.",
+    "date": "2026-10-22"
+  },
+  {
+    "id": 2,
+    "sender": "careers-support@gmail.com",
+    "subject": "Immediate Job Offer - Registration Required",
+    "body": "Congratulations! You are selected for the remote role. Please pay a mandatory training fee of Rs. 2,000 to process your offer letter.",
+    "date": "2026-10-24"
+  },
+  {
+    "id": 3,
+    "sender": "no-reply@workday.com",
+    "subject": "Application Received: Software Engineer",
+    "body": "Thank you for applying to our engineering team. We have received your application.",
+    "date": "2026-10-10"
+  }
+]
